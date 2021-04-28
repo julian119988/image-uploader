@@ -7,11 +7,13 @@ const { normalize, resolve } = require("path");
 
 app.use(cors());
 app.use(fileUpload());
+app.use(express.static(normalize(__dirname + "/build")));
 app.use(express.static(normalize(__dirname + "/public")));
 
 app.get("/", (req, res) => {
-  res.send("Hola mundo en index");
+  res.sendFile(normalize(__dirname + "/build/index.html"));
 });
+
 app.post("/upload", async (req, res) => {
   const file = req.files.file;
   const dir = normalize(`${__dirname}/public/uploads/${file.name}`);
